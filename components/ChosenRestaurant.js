@@ -8,21 +8,21 @@ const ChosenRestaurant = ({ restaurant }) => {
     infoContainerStyle,
     addressContainerStyle,
     textStyle,
-    ratingStyle
+    ratingStyle,
+    ratingContainerStyle
   } = styles;
 
   const { name, rating, review_count, price, location, image_url } = restaurant;
 
   return (
-    <Card>
+    <Card title={name}>
       <View style={imageContainerStyle}>
         <Image
-          style={{ width: 50, height: 50, borderRadius: 5 }}
+          style={{ width: 100, height: 100, borderRadius: 5 }}
           source={{ uri: image_url }}
         />
       </View>
       <View style={infoContainerStyle}>
-        <Text style={textStyle}>{name}</Text>
         <Rating
           imageSize={20}
           readonly
@@ -31,8 +31,6 @@ const ChosenRestaurant = ({ restaurant }) => {
         />
         <Text style={textStyle}>{review_count} Reviews</Text>
         <Text style={textStyle}>{price}</Text>
-      </View>
-      <View style={addressContainerStyle}>
         <Text style={textStyle}>{location.address1}</Text>
       </View>
     </Card>
@@ -41,13 +39,11 @@ const ChosenRestaurant = ({ restaurant }) => {
 
 const styles = {
   imageContainerStyle: {
-    justifyContent: 'center'
+    alignItems: 'center'
   },
-  infoContainerStyle: {
-    flex: 1
-  },
+  infoContainerStyle: {},
   addressContainerStyle: {
-    flex: 1,
+    marginTop: 15,
     justifyContent: 'center'
   },
   textStyle: {

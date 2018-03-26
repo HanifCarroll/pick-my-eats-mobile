@@ -12,7 +12,7 @@ class ChosenRestaurantScreen extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View>
         <ChosenRestaurant
           restaurant={this.props.restaurants.chosenRestaurant}
         />
