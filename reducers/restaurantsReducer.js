@@ -1,6 +1,8 @@
 import {
   FETCH_RESTAURANTS_START,
-  FETCH_RESTAURANTS_FINISH
+  FETCH_RESTAURANTS_FINISH,
+  TOGGLE_SELECTED,
+  UPDATED_CHOSEN_RESTAURANT
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -17,10 +19,26 @@ export default (state = INITIAL_STATE, action) => {
     case FETCH_RESTAURANTS_START:
       return { ...state, fetching: true };
     case FETCH_RESTAURANTS_FINISH:
+      return { ...state, fetching: false, restaurantsResults: action.payload };
+    case TOGGLE_SELECTED:
+      // If the clicked element exists in the array, remove it.
+      if (state.selectedRestaurants.includes(action.payload)) {
+        return {
+          ...state,
+          selectedRestaurants: state.selectedRestaurants.filter(
+            selected => selected != action.payload
+          )
+        };
+      }
+      // If the clicked element does not exist in the array, add it.
       return {
         ...state,
-        fetching: false,
-        restaurantsResults: action.payload
+        selectedRestaurants: [...state.selectedRestaurants, action.payload]
+      };
+    case UPDATED_CHOSEN_RESTAURANT:
+      return {
+        ...state,
+        chosenRestaurant: action.payload
       };
     default:
       return state;

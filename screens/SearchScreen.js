@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { View, TextInput } from 'react-native';
+import { View, TextInput, Keyboard } from 'react-native';
 import {
   Card,
   FormLabel,
   FormInput,
   Button,
-  Text
+  Text,
+  SearchBar
 } from 'react-native-elements';
 import { connect } from 'react-redux';
 
@@ -24,8 +25,8 @@ class SearchScreen extends Component {
 
   onSubmit = () => {
     const { navigation } = this.props;
+    Keyboard.dismiss();
     this.props.fetchRestaurants(navigation);
-    //this.props.navigation.navigate('results');
   };
 
   render() {
@@ -39,24 +40,46 @@ class SearchScreen extends Component {
           </Text>
         </View>
         <View>
-          <FormLabel>Search for...</FormLabel>
-          <FormInput
+          <SearchBar
+            lightTheme
+            round
+            noIcon
+            containerStyle={{ backgroundColor: 'white' }}
+            inputStyle={{ backgroundColor: 'white' }}
+            placeholder="Search for..."
             onChangeText={value =>
               this.props.updateQuery({
                 prop: 'query',
                 value
               })
             }
+            onClearText={() =>
+              this.props.updateQuery({
+                prop: 'query',
+                value: ''
+              })
+            }
             value={this.props.query.query}
           />
         </View>
         <View>
-          <FormLabel>Near...</FormLabel>
-          <FormInput
+          <SearchBar
+            lightTheme
+            round
+            noIcon
+            containerStyle={{ backgroundColor: 'white', marginTop: 20 }}
+            inputStyle={{ backgroundColor: 'white' }}
+            placeholder="Near..."
             onChangeText={value =>
               this.props.updateQuery({
                 prop: 'location',
                 value
+              })
+            }
+            onClearText={() =>
+              this.props.updateQuery({
+                prop: 'location',
+                value: ''
               })
             }
             value={this.props.query.location}
@@ -64,6 +87,7 @@ class SearchScreen extends Component {
         </View>
         <Button
           title="SEARCH!"
+          buttonStyle={{ marginTop: 20 }}
           onPress={this.onSubmit}
           loading={this.props.restaurants.fetching}
         />

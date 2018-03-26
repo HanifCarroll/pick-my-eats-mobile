@@ -2,7 +2,9 @@ import axios from 'axios';
 import {
   UPDATE_QUERY,
   FETCH_RESTAURANTS_START,
-  FETCH_RESTAURANTS_FINISH
+  FETCH_RESTAURANTS_FINISH,
+  TOGGLE_SELECTED,
+  UPDATED_CHOSEN_RESTAURANT
 } from './types';
 
 export const updateQuery = ({ prop, value }) => {
@@ -28,4 +30,12 @@ export const fetchRestaurants = navigation => async (dispatch, getState) => {
   });
 
   navigation.navigate('results');
+};
+
+export const toggleSelected = restaurant => {
+  return { type: TOGGLE_SELECTED, payload: restaurant };
+};
+
+export const updateChosenRestaurant = restaurant => {
+  return { type: UPDATED_CHOSEN_RESTAURANT, payload: restaurant };
 };
