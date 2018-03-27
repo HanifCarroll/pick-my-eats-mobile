@@ -42,8 +42,7 @@ class SearchResultsScreen extends Component {
 
   onSubmit = () => {
     this.props.updateChosenRestaurant(this.chooseRandomRestaurant());
-    this.props.fetchReviews();
-    this.props.navigation.navigate('chosen');
+    this.props.fetchReviews(this.props.navigation);
   };
 
   chooseRandomRestaurant = () => {
@@ -66,6 +65,7 @@ class SearchResultsScreen extends Component {
           title="Pick!"
           onPress={this.onSubmit}
           buttonStyle={{ marginTop: 20, marginBottom: 30 }}
+          loading={this.props.restaurants.fetching}
         />
       </View>
     );

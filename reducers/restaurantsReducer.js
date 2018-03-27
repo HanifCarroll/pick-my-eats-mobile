@@ -25,7 +25,12 @@ export default (state = INITIAL_STATE, action) => {
     case FETCH_REVIEWS_START:
       return { ...state, fetching: true, reviews: [] };
     case FETCH_REVIEWS_FINISH:
-      return { ...state, fetching: false, reviews: action.payload };
+      return {
+        ...state,
+        fetching: false,
+        reviews: action.payload,
+        selectedRestaurants: []
+      };
     case TOGGLE_SELECTED:
       // If the clicked element exists in the array, remove it.
       if (state.selectedRestaurants.includes(action.payload)) {

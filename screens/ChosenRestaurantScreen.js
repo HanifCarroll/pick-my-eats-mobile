@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 
 import ChosenRestaurant from '../components/ChosenRestaurant';
@@ -13,13 +13,12 @@ class ChosenRestaurantScreen extends Component {
 
   render() {
     return (
-      <View>
+      <ScrollView style={{ flex: 1 }}>
         <ChosenRestaurant
           restaurant={this.props.restaurants.chosenRestaurant}
         />
-        {console.log(this.props.restaurants.reviews)}
-        <Reviews restaurant={this.props.restaurants.chosenRestaurant} />
-      </View>
+        <Reviews data={this.props.restaurants.reviews} />
+      </ScrollView>
     );
   }
 }

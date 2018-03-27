@@ -34,7 +34,7 @@ export const fetchRestaurants = navigation => async (dispatch, getState) => {
   navigation.navigate('results');
 };
 
-export const fetchReviews = () => async (dispatch, getState) => {
+export const fetchReviews = navigation => async (dispatch, getState) => {
   dispatch({ type: FETCH_REVIEWS_START });
 
   const { id } = getState().restaurants.chosenRestaurant;
@@ -44,6 +44,8 @@ export const fetchReviews = () => async (dispatch, getState) => {
   );
 
   dispatch({ type: FETCH_REVIEWS_FINISH, payload: results.data });
+
+  navigation.navigate('chosen');
 };
 
 export const toggleSelected = restaurant => {
