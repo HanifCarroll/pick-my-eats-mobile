@@ -4,7 +4,9 @@ import {
   FETCH_RESTAURANTS_START,
   FETCH_RESTAURANTS_FINISH,
   TOGGLE_SELECTED,
-  UPDATED_CHOSEN_RESTAURANT
+  UPDATED_CHOSEN_RESTAURANT,
+  FETCH_REVIEWS_START,
+  FETCH_REVIEWS_FINISH
 } from './types';
 
 export const updateQuery = ({ prop, value }) => {
@@ -30,6 +32,18 @@ export const fetchRestaurants = navigation => async (dispatch, getState) => {
   });
 
   navigation.navigate('results');
+};
+
+export const fetchReviews = () => async (dispatch, getState) => {
+  dispatch({ type: FETCH_REVIEWS_START });
+
+  const { id } = getState().restaurants.chosenRestaurant;
+
+  let results = await axios.get(
+    `https://pick-my-eats.herokuapp.com/api/reviews/${id}`
+  );
+
+  dispatch({ type: FETCH_REVIEWS_FINISH, payload: results.data });
 };
 
 export const toggleSelected = restaurant => {

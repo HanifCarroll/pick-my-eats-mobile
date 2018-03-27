@@ -3,6 +3,7 @@ import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 
 import ChosenRestaurant from '../components/ChosenRestaurant';
+import Reviews from '../components/Reviews';
 
 class ChosenRestaurantScreen extends Component {
   static navigationOptions = {
@@ -16,6 +17,8 @@ class ChosenRestaurantScreen extends Component {
         <ChosenRestaurant
           restaurant={this.props.restaurants.chosenRestaurant}
         />
+        {console.log(this.props.restaurants.reviews)}
+        <Reviews restaurant={this.props.restaurants.chosenRestaurant} />
       </View>
     );
   }

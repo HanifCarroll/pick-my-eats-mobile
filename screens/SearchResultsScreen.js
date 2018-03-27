@@ -42,6 +42,7 @@ class SearchResultsScreen extends Component {
 
   onSubmit = () => {
     this.props.updateChosenRestaurant(this.chooseRandomRestaurant());
+    this.props.fetchReviews();
     this.props.navigation.navigate('chosen');
   };
 

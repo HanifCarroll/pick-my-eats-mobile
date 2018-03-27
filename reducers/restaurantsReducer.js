@@ -2,7 +2,9 @@ import {
   FETCH_RESTAURANTS_START,
   FETCH_RESTAURANTS_FINISH,
   TOGGLE_SELECTED,
-  UPDATED_CHOSEN_RESTAURANT
+  UPDATED_CHOSEN_RESTAURANT,
+  FETCH_REVIEWS_START,
+  FETCH_REVIEWS_FINISH
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -20,6 +22,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, fetching: true };
     case FETCH_RESTAURANTS_FINISH:
       return { ...state, fetching: false, restaurantsResults: action.payload };
+    case FETCH_REVIEWS_START:
+      return { ...state, fetching: true, reviews: [] };
+    case FETCH_REVIEWS_FINISH:
+      return { ...state, fetching: false, reviews: action.payload };
     case TOGGLE_SELECTED:
       // If the clicked element exists in the array, remove it.
       if (state.selectedRestaurants.includes(action.payload)) {
