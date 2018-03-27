@@ -63,9 +63,11 @@ class SearchResultsScreen extends Component {
         {this.renderList()}
         <Button
           title="Pick!"
+          backgroundColor="#99b6e5"
           onPress={this.onSubmit}
           buttonStyle={{ marginTop: 20, marginBottom: 30 }}
           loading={this.props.restaurants.fetching}
+          disabled={this.props.restaurants.selectedRestaurants.length === 0}
         />
       </View>
     );

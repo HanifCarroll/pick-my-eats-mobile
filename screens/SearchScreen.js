@@ -87,9 +87,11 @@ class SearchScreen extends Component {
         </View>
         <Button
           title="SEARCH!"
+          backgroundColor="#99b6e5"
           buttonStyle={{ marginTop: 20 }}
           onPress={this.onSubmit}
           loading={this.props.restaurants.fetching}
+          disabled={!this.props.query.query || !this.props.query.location}
         />
       </View>
     );

@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "pick-my-eats",
-    "description": "This project is really great.",
+    "description": "No more fuss about deciding where to eat!",
     "slug": "pick-my-eats",
     "privacy": "public",
     "sdkVersion": "25.0.0",
@@ -16,6 +16,10 @@
     },
     "ios": {
       "supportsTablet": true
+    },
+    "androidStatusBar": {
+      "barStyle": "dark-content",
+      "backgroundColor": "#edeaea"
     }
   }
 }
