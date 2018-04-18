@@ -7,10 +7,9 @@ import {
   Slider,
   Dimensions
 } from "react-native";
-import { Button, Card, CardSection, Divider } from "react-native-elements";
+import { Button, Card, Divider } from "react-native-elements";
 import CheckBox from "react-native-checkbox";
 import { connect } from "react-redux";
-import SettingsList from "react-native-settings-list";
 
 import * as actions from "../actions";
 

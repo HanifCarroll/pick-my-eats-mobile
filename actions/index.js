@@ -8,6 +8,7 @@ import {
   FETCH_REVIEWS_START,
   FETCH_REVIEWS_FINISH
 } from "./types";
+import { ENDPOINT } from "../env";
 
 export const updateQuery = ({ prop, value }) => {
   return {
@@ -41,7 +42,7 @@ export const fetchRestaurants = navigation => async (dispatch, getState) => {
     }
   }
 
-  let results = await axios.post("https://pick-my-eats.herokuapp.com/api", {
+  let results = await axios.post(ENDPOINT, {
     term: query,
     location,
     radius: radius * 1600,
@@ -63,9 +64,7 @@ export const fetchReviews = navigation => async (dispatch, getState) => {
 
   const { id } = getState().restaurants.chosenRestaurant;
 
-  let results = await axios.get(
-    `https://pick-my-eats.herokuapp.com/api/reviews/${id}`
-  );
+  let results = await axios.get(`${ENDPOINT}/reviews/${id}`);
 
   dispatch({ type: FETCH_REVIEWS_FINISH, payload: results.data });
 

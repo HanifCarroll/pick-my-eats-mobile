@@ -1,10 +1,20 @@
-import React, { Component } from 'react';
-import { View, Text, Image, TouchableWithoutFeedback } from 'react-native';
-import { Card, Rating } from 'react-native-elements';
+import React, { Component } from "react";
+import {
+  View,
+  Text,
+  Image,
+  TouchableWithoutFeedback,
+  Linking
+} from "react-native";
+import { Card, Rating } from "react-native-elements";
 
 class RestaurantCard extends React.Component {
   state = {
     selected: false
+  };
+
+  handleLongPress = () => {
+    Linking.openURL(this.props.restaurant.url);
   };
 
   toggleSelected = () => {
@@ -27,15 +37,19 @@ class RestaurantCard extends React.Component {
       review_count,
       price,
       location,
+      url,
       image_url
     } = this.props.restaurant;
 
     return (
-      <TouchableWithoutFeedback onPress={this.toggleSelected}>
+      <TouchableWithoutFeedback
+        onPress={this.toggleSelected}
+        onLongPress={this.handleLongPress}
+      >
         <Card
           flexDirection="row"
           containerStyle={{
-            backgroundColor: this.state.selected ? 'red' : 'white'
+            backgroundColor: this.state.selected ? "red" : "white"
           }}
         >
           <View style={imageContainerStyle}>
@@ -66,20 +80,20 @@ class RestaurantCard extends React.Component {
 
 const styles = {
   imageContainerStyle: {
-    justifyContent: 'center'
+    justifyContent: "center"
   },
   infoContainerStyle: {
     flex: 1
   },
   addressContainerStyle: {
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: "center"
   },
   textStyle: {
-    textAlign: 'center'
+    textAlign: "center"
   },
   ratingStyle: {
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 5
   }
 };

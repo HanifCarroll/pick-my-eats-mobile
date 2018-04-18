@@ -60,6 +60,9 @@ class SearchResultsScreen extends Component {
           <Text style={{ textAlign: "center" }}>
             Tap the restaurants that look good!
           </Text>
+          <Text style={{ textAlign: "center" }}>
+            Longpress a restaurant to open its Yelp page in a new window!
+          </Text>
         </View>
         {this.renderList()}
         <Button
