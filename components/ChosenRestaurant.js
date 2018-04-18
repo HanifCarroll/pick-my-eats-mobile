@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
-import { View, Image, Text, Linking } from 'react-native';
-import { Card, Rating, Button } from 'react-native-elements';
+import React, { Component } from "react";
+import { View, Image, Text, Linking, StyleSheet } from "react-native";
+import { Card, Rating, Button } from "react-native-elements";
 
 const ChosenRestaurant = ({ restaurant }) => {
   const {
     imageContainerStyle,
+    imageStyle,
     infoContainerStyle,
     addressContainerStyle,
     textStyle,
@@ -26,10 +27,7 @@ const ChosenRestaurant = ({ restaurant }) => {
   return (
     <Card title={name}>
       <View style={imageContainerStyle}>
-        <Image
-          style={{ width: 100, height: 100, borderRadius: 5 }}
-          source={{ uri: image_url }}
-        />
+        <Image style={imageStyle} source={{ uri: image_url }} />
       </View>
       <View style={infoContainerStyle}>
         <Rating
@@ -43,32 +41,37 @@ const ChosenRestaurant = ({ restaurant }) => {
         <Text style={textStyle}>{location.address1}</Text>
       </View>
       <View style={buttonStyle}>
-        <Button title="View Restaurant" onPress={() => Linking.openURL(url)} />
+        <Button
+          title="View Restaurant"
+          backgroundColor="#99b6e5"
+          onPress={() => Linking.openURL(url)}
+        />
       </View>
     </Card>
   );
 };
 
-const styles = {
+const styles = StyleSheet.create({
   imageContainerStyle: {
-    alignItems: 'center'
+    alignItems: "center"
   },
+  imageStyle: { width: 100, height: 100, borderRadius: 5 },
   infoContainerStyle: {},
   addressContainerStyle: {
     marginTop: 15,
-    justifyContent: 'center'
+    justifyContent: "center"
   },
   textStyle: {
-    textAlign: 'center'
+    textAlign: "center"
   },
   ratingStyle: {
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 5
   },
   buttonStyle: {
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 20
   }
-};
+});
 
 export default ChosenRestaurant;

@@ -3,16 +3,10 @@ import {
   View,
   TextInput,
   Keyboard,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  StyleSheet
 } from "react-native";
-import {
-  Card,
-  FormLabel,
-  FormInput,
-  Button,
-  Text,
-  SearchBar
-} from "react-native-elements";
+import { Card, Button, Text, SearchBar } from "react-native-elements";
 import { connect } from "react-redux";
 
 import * as actions from "../actions";
@@ -40,7 +34,13 @@ class SearchScreen extends Component {
   };
 
   render() {
-    const { textStyle } = styles;
+    const {
+      textStyle,
+      buttonStyle,
+      searchBarInputStyle,
+      searchBarContainerStyle1,
+      searchBarContainerStyle2
+    } = styles;
 
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -55,8 +55,8 @@ class SearchScreen extends Component {
               lightTheme
               round
               noIcon
-              containerStyle={{ backgroundColor: "white" }}
-              inputStyle={{ backgroundColor: "white" }}
+              containerStyle={searchBarContainerStyle1}
+              inputStyle={searchBarInputStyle}
               placeholder="Search for..."
               onChangeText={value =>
                 this.props.updateQuery({
@@ -78,8 +78,8 @@ class SearchScreen extends Component {
               lightTheme
               round
               noIcon
-              containerStyle={{ backgroundColor: "white", marginTop: 20 }}
-              inputStyle={{ backgroundColor: "white" }}
+              containerStyle={searchBarContainerStyle2}
+              inputStyle={searchBarInputStyle}
               placeholder="Near..."
               onChangeText={value =>
                 this.props.updateQuery({
@@ -99,7 +99,7 @@ class SearchScreen extends Component {
           <Button
             title="SEARCH!"
             backgroundColor="#99b6e5"
-            buttonStyle={{ marginTop: 20 }}
+            buttonStyle={buttonStyle}
             onPress={this.onSubmit}
             loading={this.props.restaurants.fetching}
             disabled={!this.props.query.query || !this.props.query.location}
@@ -115,10 +115,23 @@ const mapStateToProps = state => ({
   restaurants: state.restaurants
 });
 
-const styles = {
+const styles = StyleSheet.create({
   textStyle: {
     textAlign: "center"
+  },
+  buttonStyle: {
+    marginTop: 20
+  },
+  searchBarContainerStyle1: {
+    backgroundColor: "white"
+  },
+  searchBarContainerStyle2: {
+    backgroundColor: "white",
+    marginTop: 20
+  },
+  searchBarInputStyle: {
+    backgroundColor: "white"
   }
-};
+});
 
 export default connect(mapStateToProps, actions)(SearchScreen);

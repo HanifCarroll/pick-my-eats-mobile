@@ -4,7 +4,8 @@ import {
   Text,
   Image,
   TouchableWithoutFeedback,
-  Linking
+  Linking,
+  StyleSheet
 } from "react-native";
 import { Card, Rating } from "react-native-elements";
 
@@ -25,6 +26,8 @@ class RestaurantCard extends React.Component {
   render() {
     const {
       imageContainerStyle,
+      imageStyle,
+      cardContainerStyle,
       infoContainerStyle,
       addressContainerStyle,
       textStyle,
@@ -53,10 +56,7 @@ class RestaurantCard extends React.Component {
           }}
         >
           <View style={imageContainerStyle}>
-            <Image
-              style={{ width: 50, height: 50, borderRadius: 5 }}
-              source={{ uri: image_url }}
-            />
+            <Image style={imageStyle} source={{ uri: image_url }} />
           </View>
           <View style={infoContainerStyle}>
             <Text style={textStyle}>{name}</Text>
@@ -78,10 +78,11 @@ class RestaurantCard extends React.Component {
   }
 }
 
-const styles = {
+const styles = StyleSheet.create({
   imageContainerStyle: {
     justifyContent: "center"
   },
+  imageStyle: { width: 50, height: 50, borderRadius: 5 },
   infoContainerStyle: {
     flex: 1
   },
@@ -96,6 +97,6 @@ const styles = {
     alignItems: "center",
     marginTop: 5
   }
-};
+});
 
 export default RestaurantCard;

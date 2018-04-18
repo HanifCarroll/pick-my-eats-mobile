@@ -54,13 +54,13 @@ class SearchResultsScreen extends Component {
   };
 
   render() {
+    const { viewStyle, textStyle, buttonStyle } = styles;
+
     return (
-      <View style={{ flex: 1 }}>
+      <View style={viewStyle}>
         <View>
-          <Text style={{ textAlign: "center" }}>
-            Tap the restaurants that look good!
-          </Text>
-          <Text style={{ textAlign: "center" }}>
+          <Text style={textStyle}>Tap the restaurants that look good!</Text>
+          <Text style={textStyle}>
             Longpress a restaurant to open its Yelp page in a new window!
           </Text>
         </View>
@@ -69,7 +69,7 @@ class SearchResultsScreen extends Component {
           title="Pick!"
           backgroundColor="#99b6e5"
           onPress={this.onSubmit}
-          buttonStyle={{ marginTop: 20, marginBottom: 30 }}
+          buttonStyle={buttonStyle}
           loading={this.props.restaurants.fetching}
           disabled={this.props.restaurants.selectedRestaurants.length === 0}
         />
@@ -78,6 +78,14 @@ class SearchResultsScreen extends Component {
   }
 }
 
+const styles = StyleSheet.create({
+  viewStyle: { flex: 1 },
+  textStyle: { textAlign: "center" },
+  buttonStyle: {
+    marginTop: 20,
+    marginBottom: 30
+  }
+});
 const mapStateToProps = state => ({ restaurants: state.restaurants });
 
 export default connect(mapStateToProps, actions)(SearchResultsScreen);
