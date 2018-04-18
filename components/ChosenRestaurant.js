@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Image, Text } from 'react-native';
-import { Card, Rating } from 'react-native-elements';
+import { View, Image, Text, Linking } from 'react-native';
+import { Card, Rating, Button } from 'react-native-elements';
 
 const ChosenRestaurant = ({ restaurant }) => {
   const {
@@ -9,10 +9,19 @@ const ChosenRestaurant = ({ restaurant }) => {
     addressContainerStyle,
     textStyle,
     ratingStyle,
-    ratingContainerStyle
+    ratingContainerStyle,
+    buttonStyle
   } = styles;
 
-  const { name, rating, review_count, price, location, image_url } = restaurant;
+  const {
+    name,
+    rating,
+    review_count,
+    price,
+    location,
+    image_url,
+    url
+  } = restaurant;
 
   return (
     <Card title={name}>
@@ -33,6 +42,9 @@ const ChosenRestaurant = ({ restaurant }) => {
         <Text style={textStyle}>{price}</Text>
         <Text style={textStyle}>{location.address1}</Text>
       </View>
+      <View style={buttonStyle}>
+        <Button title="View Restaurant" onPress={() => Linking.openURL(url)} />
+      </View>
     </Card>
   );
 };
@@ -52,6 +64,10 @@ const styles = {
   ratingStyle: {
     alignItems: 'center',
     marginTop: 5
+  },
+  buttonStyle: {
+    alignItems: 'center',
+    marginTop: 20
   }
 };
 

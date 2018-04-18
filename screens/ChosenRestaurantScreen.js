@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import { View, Text, ScrollView } from 'react-native';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { View, Text, ScrollView } from "react-native";
+import { connect } from "react-redux";
 
-import ChosenRestaurant from '../components/ChosenRestaurant';
-import Reviews from '../components/Reviews';
+import ChosenRestaurant from "../components/ChosenRestaurant";
+import Reviews from "../components/Reviews";
 
 class ChosenRestaurantScreen extends Component {
   static navigationOptions = {
-    title: 'And the winner is...',
-    headerTitleStyle: { textAlign: 'center', flex: 1 }
+    title: "And the winner is...",
+    headerStyle: { height: 40, bottom: -10, paddingBottom: 10 }
   };
 
   render() {

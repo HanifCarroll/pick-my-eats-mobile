@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { View, TextInput, Keyboard } from 'react-native';
+import React, { Component } from "react";
+import { View, TextInput, Keyboard } from "react-native";
 import {
   Card,
   FormLabel,
@@ -7,21 +7,26 @@ import {
   Button,
   Text,
   SearchBar
-} from 'react-native-elements';
-import { connect } from 'react-redux';
+} from "react-native-elements";
+import { connect } from "react-redux";
 
-import * as actions from '../actions';
+import * as actions from "../actions";
 
 class SearchScreen extends Component {
-  static navigationOptions = {
-    title: 'Search',
-    headerTitleStyle: { textAlign: 'center', flex: 1 }
-  };
-
-  state = {
-    query: '',
-    location: ''
-  };
+  static navigationOptions = ({ navigation }) => ({
+    title: "Search",
+    headerRight: (
+      <Button
+        backgroundColor="rgba(0,0,0,0)"
+        color="rgba(0, 122, 255, 1)"
+        title="Settings"
+        onPress={() => {
+          navigation.navigate("settings");
+        }}
+      />
+    ),
+    headerStyle: { height: 40, bottom: -10, paddingBottom: 10 }
+  });
 
   onSubmit = () => {
     const { navigation } = this.props;
@@ -44,19 +49,19 @@ class SearchScreen extends Component {
             lightTheme
             round
             noIcon
-            containerStyle={{ backgroundColor: 'white' }}
-            inputStyle={{ backgroundColor: 'white' }}
+            containerStyle={{ backgroundColor: "white" }}
+            inputStyle={{ backgroundColor: "white" }}
             placeholder="Search for..."
             onChangeText={value =>
               this.props.updateQuery({
-                prop: 'query',
+                prop: "query",
                 value
               })
             }
             onClearText={() =>
               this.props.updateQuery({
-                prop: 'query',
-                value: ''
+                prop: "query",
+                value: ""
               })
             }
             value={this.props.query.query}
@@ -67,19 +72,19 @@ class SearchScreen extends Component {
             lightTheme
             round
             noIcon
-            containerStyle={{ backgroundColor: 'white', marginTop: 20 }}
-            inputStyle={{ backgroundColor: 'white' }}
+            containerStyle={{ backgroundColor: "white", marginTop: 20 }}
+            inputStyle={{ backgroundColor: "white" }}
             placeholder="Near..."
             onChangeText={value =>
               this.props.updateQuery({
-                prop: 'location',
+                prop: "location",
                 value
               })
             }
             onClearText={() =>
               this.props.updateQuery({
-                prop: 'location',
-                value: ''
+                prop: "location",
+                value: ""
               })
             }
             value={this.props.query.location}
@@ -105,7 +110,7 @@ const mapStateToProps = state => ({
 
 const styles = {
   textStyle: {
-    textAlign: 'center'
+    textAlign: "center"
   }
 };
 

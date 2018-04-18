@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 import {
   UPDATE_QUERY,
   FETCH_RESTAURANTS_START,
@@ -7,7 +7,7 @@ import {
   UPDATED_CHOSEN_RESTAURANT,
   FETCH_REVIEWS_START,
   FETCH_REVIEWS_FINISH
-} from './types';
+} from "./types";
 
 export const updateQuery = ({ prop, value }) => {
   return {
@@ -19,11 +19,35 @@ export const updateQuery = ({ prop, value }) => {
 export const fetchRestaurants = navigation => async (dispatch, getState) => {
   dispatch({ type: FETCH_RESTAURANTS_START });
 
-  const { query, location } = getState().query;
+  const {
+    query,
+    location,
+    radius,
+    resultsLimit,
+    openNow,
+    price1,
+    price2,
+    price3,
+    price4
+  } = getState().query;
 
-  let results = await axios.post('https://pick-my-eats.herokuapp.com/api', {
+  const prices = [price1, price2, price3, price4];
+
+  let finalPrices = [];
+
+  for (let i = 0; i < prices.length; i++) {
+    if (prices[i]) {
+      finalPrices.push(i + 1);
+    }
+  }
+
+  let results = await axios.post("https://pick-my-eats.herokuapp.com/api", {
     term: query,
-    location
+    location,
+    radius: radius * 1600,
+    resultsLimit,
+    openNow,
+    price: finalPrices.toString()
   });
 
   dispatch({
@@ -31,7 +55,7 @@ export const fetchRestaurants = navigation => async (dispatch, getState) => {
     payload: results.data.businesses
   });
 
-  navigation.navigate('results');
+  navigation.navigate("results");
 };
 
 export const fetchReviews = navigation => async (dispatch, getState) => {
@@ -45,7 +69,7 @@ export const fetchReviews = navigation => async (dispatch, getState) => {
 
   dispatch({ type: FETCH_REVIEWS_FINISH, payload: results.data });
 
-  navigation.navigate('chosen');
+  navigation.navigate("chosen");
 };
 
 export const toggleSelected = restaurant => {

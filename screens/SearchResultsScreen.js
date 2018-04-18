@@ -1,27 +1,28 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   FlatList,
   View,
   Text,
   ActivityIndicator,
   StyleSheet
-} from 'react-native';
-import { Button } from 'react-native-elements';
-import { connect } from 'react-redux';
+} from "react-native";
+import { Button } from "react-native-elements";
+import { connect } from "react-redux";
 
-import * as actions from '../actions';
-import RestaurantCard from '../components/RestaurantCard';
+import * as actions from "../actions";
+import RestaurantCard from "../components/RestaurantCard";
 
 class SearchResultsScreen extends Component {
   static navigationOptions = {
-    title: 'Results',
-    headerTitleStyle: { textAlign: 'center', flex: 1 }
+    title: "Results",
+    headerStyle: { height: 40, bottom: -10, paddingBottom: 10 }
   };
 
   renderItem = ({ item }) => (
     <RestaurantCard
       restaurant={item}
       toggleSelected={this.props.toggleSelected}
+      selected={this.props.restaurants.selectedRestaurants.includes(item)}
     />
   );
 
@@ -56,7 +57,7 @@ class SearchResultsScreen extends Component {
     return (
       <View style={{ flex: 1 }}>
         <View>
-          <Text style={{ textAlign: 'center' }}>
+          <Text style={{ textAlign: "center" }}>
             Tap the restaurants that look good!
           </Text>
         </View>

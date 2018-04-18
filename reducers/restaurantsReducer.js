@@ -49,7 +49,8 @@ export default (state = INITIAL_STATE, action) => {
     case UPDATED_CHOSEN_RESTAURANT:
       return {
         ...state,
-        chosenRestaurant: action.payload
+        chosenRestaurant: action.payload,
+        selectedRestaurants: []
       };
     default:
       return state;
