@@ -3,6 +3,8 @@ import { StackNavigator } from "react-navigation";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import ReduxThunk from "redux-thunk";
+import { Font, AppLoading } from "expo";
+import { Root } from "native-base";
 
 import reducers from "./reducers";
 import SearchScreen from "./screens/SearchScreen";
@@ -11,6 +13,16 @@ import ChosenRestaurantScreen from "./screens/ChosenRestaurantScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 
 export default class App extends React.Component {
+  state = { loading: true };
+
+  async componentWillMount() {
+    await Font.loadAsync({
+      Roboto: require("native-base/Fonts/Roboto.ttf"),
+      Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
+    });
+    this.setState({ loading: false });
+  }
+
   render() {
     const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
 
@@ -21,6 +33,13 @@ export default class App extends React.Component {
       chosen: { screen: ChosenRestaurantScreen }
     });
 
+    if (this.state.loading) {
+      return (
+        <Root>
+          <AppLoading />
+        </Root>
+      );
+    }
     return (
       <Provider store={store}>
         <MainNavigator />

@@ -6,11 +6,12 @@ import {
   ActivityIndicator,
   StyleSheet
 } from "react-native";
-import { Button } from "react-native-elements";
 import { connect } from "react-redux";
+import { Card, CardItem } from "native-base";
 
 import * as actions from "../actions";
 import RestaurantCard from "../components/RestaurantCard";
+import Deck from "../components/Deck";
 
 class SearchResultsScreen extends Component {
   static navigationOptions = {
@@ -53,7 +54,7 @@ class SearchResultsScreen extends Component {
     return this.props.restaurants.selectedRestaurants[random];
   };
 
-  render() {
+  oldrender() {
     const { viewStyle, textStyle, buttonStyle } = styles;
 
     return (
@@ -75,6 +76,9 @@ class SearchResultsScreen extends Component {
         />
       </View>
     );
+  }
+  render() {
+    return <Deck restaurants={this.props.restaurants.restaurantsResults} />;
   }
 }
 
