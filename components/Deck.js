@@ -1,144 +1,163 @@
-import React, { Component } from "react";
-import { StyleSheet, Image, Button, Dimensions } from "react-native";
+import React from "react";
+import {
+  StyleSheet,
+  Image,
+  Button,
+  Linking,
+  TouchableOpacity,
+  ActivityIndicator
+} from "react-native";
 import {
   Container,
   Content,
-  Header,
   View,
   DeckSwiper,
   CardItem,
   Card,
-  Thumbnail,
   Text,
-  Left,
-  Body,
-  Right,
-  Icon
+  Body
 } from "native-base";
 import StarRating from "react-native-star-rating";
+import { SCREEN_WIDTH, SCREEN_HEIGHT } from "../Utils";
 
-const screen = {
-  height: Dimensions.get("window").height,
-  width: Dimensions.get("window").width
+const renderItem = item => {
+  const {
+    cardStyle,
+    titleTextStyle,
+    imageStyle,
+    cardBodyTextStyle,
+    alignItemsCenter,
+    footerStyle
+  } = styles;
+
+  const { name, image_url, rating, review_count, price, location, url } = item;
+
+  return (
+    <Container>
+      <Content contentContainerStyle={alignItemsCenter}>
+        <Card style={cardStyle}>
+          <CardItem bordered>
+            <Body style={alignItemsCenter}>
+              <Text style={titleTextStyle}>{name}</Text>
+            </Body>
+          </CardItem>
+          <CardItem>
+            <Image source={{ uri: image_url }} style={imageStyle} />
+          </CardItem>
+          <CardItem bordered>
+            <Body style={cardBodyTextStyle}>
+              <StarRating
+                disabled
+                maxStars={5}
+                rating={rating}
+                fullStarColor="orange"
+                emptyStarColor="orange"
+              />
+              <Text>{review_count} Reviews</Text>
+              <Text>{price}</Text>
+              <Text>{location.address1}</Text>
+              <Text>
+                {location.city}, {location.state} {location.zip_code}
+              </Text>
+            </Body>
+          </CardItem>
+          <CardItem style={footerStyle}>
+            <Body style={alignItemsCenter}>
+              <View>
+                <Button
+                  title="View Restaurant"
+                  color="#99b6e5"
+                  onPress={() => Linking.openURL(url)}
+                />
+              </View>
+            </Body>
+          </CardItem>
+        </Card>
+      </Content>
+    </Container>
+  );
 };
 
-export default class DeckSwiperExample extends Component {
-  renderRECard = item => (
-    <Card title={item.name}>
-      <View style={imageContainerStyle}>
-        <Image style={imageStyle} source={{ uri: item.image_url }} />
-      </View>
-      <View style={infoContainerStyle}>
-        <Rating
-          imageSize={20}
-          readonly
-          startingValue={item.rating}
-          style={ratingStyle}
-        />
-        <Text style={textStyle}>{item.review_count} Reviews</Text>
-        <Text style={textStyle}>{item.price}</Text>
-        <Text style={textStyle}>{item.location.address1}</Text>
-      </View>
-      <View style={buttonStyle}>
-        <Button
-          title="View Restaurant"
-          backgroundColor="#99b6e5"
-          onPress={() => Linking.openURL(item.url)}
-        />
-      </View>
-    </Card>
+const Deck = props => {
+  const {
+    headerStyle,
+    headerTextStyle,
+    finishButtonContainerStyle,
+    finishButtonStyle,
+    finishButtonTextStyle,
+    justifyContentCenter
+  } = styles;
+
+  const {
+    restaurants,
+    currentIndex,
+    onSwipeLeft,
+    onSwipeRight,
+    onFinish,
+    fetching,
+    selectedNum
+  } = props;
+
+  const FinishButton = () => (
+    <CardItem style={finishButtonContainerStyle}>
+      <Body style={justifyContentCenter}>
+        <TouchableOpacity style={finishButtonStyle} onPress={onFinish}>
+          <View style={justifyContentCenter}>
+            {fetching && <ActivityIndicator color="white" />}
+          </View>
+          {!fetching && (
+            <View style={justifyContentCenter}>
+              <Text style={finishButtonTextStyle}>PICK!</Text>
+            </View>
+          )}
+        </TouchableOpacity>
+      </Body>
+    </CardItem>
   );
 
-  renderNBCard = item => console.log(hi);
+  const StartOverButton = () => (
+    <CardItem style={finishButtonContainerStyle}>
+      <Body style={justifyContentCenter}>
+        <TouchableOpacity style={finishButtonStyle} onPress={onFinish}>
+          <View style={justifyContentCenter}>
+            {fetching && <ActivityIndicator color="white" />}
+          </View>
+          {!fetching && (
+            <View style={justifyContentCenter}>
+              <Text style={finishButtonTextStyle}>NONE SELECTED!</Text>
+            </View>
+          )}
+        </TouchableOpacity>
+      </Body>
+    </CardItem>
+  );
 
-  render() {
-    const {
-      headerStyle,
-      headerTextStyle,
-      cardStyle,
-      titleTextStyle,
-      imageStyle,
-      cardBodyTextStyle,
-      alignItemsCenter,
-      footerStyle
-    } = styles;
+  const renderEmpty = selectedNum => {
+    return selectedNum === 0 ? <StartOverButton /> : <FinishButton />;
+  };
 
-    return (
-      <View>
-        <CardItem style={headerStyle}>
-          <Text style={headerTextStyle}>25 Cards Remaining</Text>
-        </CardItem>
-        <DeckSwiper
-          dataSource={this.props.restaurants}
-          looping={false}
-          onSwipeLeft={item => console.log(item)}
-          onSwipeRight={item => console.log(item)}
-          renderEmpty={() => console.log("finished")}
-          renderItem={item => {
-            const {
-              name,
-              image_url,
-              rating,
-              review_count,
-              price,
-              location,
-              url
-            } = item;
-
-            return (
-              <Container>
-                <Content contentContainerStyle={alignItemsCenter}>
-                  <Card style={cardStyle}>
-                    <CardItem bordered>
-                      <Body style={alignItemsCenter}>
-                        <Text style={titleTextStyle}>{name}</Text>
-                      </Body>
-                    </CardItem>
-                    <CardItem>
-                      <Image source={{ uri: image_url }} style={imageStyle} />
-                    </CardItem>
-                    <CardItem bordered>
-                      <Body style={cardBodyTextStyle}>
-                        <StarRating
-                          disabled
-                          maxStars={5}
-                          rating={rating}
-                          fullStarColor="orange"
-                          emptyStarColor="orange"
-                        />
-                        <Text>{review_count} Reviews</Text>
-                        <Text>{price}</Text>
-                        <Text>{location.address1}</Text>
-                        <Text>
-                          {location.city}, {location.state} {location.zip_code}
-                        </Text>
-                      </Body>
-                    </CardItem>
-                    <CardItem style={footerStyle}>
-                      <Body style={alignItemsCenter}>
-                        <View>
-                          <Button
-                            title="View Restaurant"
-                            color="#99b6e5"
-                            onPress={() => Linking.openURL(url)}
-                          />
-                        </View>
-                      </Body>
-                    </CardItem>
-                  </Card>
-                </Content>
-              </Container>
-            );
-          }}
-        />
-      </View>
-    );
-  }
-}
+  return (
+    <Container>
+      <CardItem style={headerStyle}>
+        <Text style={headerTextStyle}>
+          {restaurants.length - currentIndex} Cards Remaining
+        </Text>
+      </CardItem>
+      <DeckSwiper
+        dataSource={restaurants}
+        looping={false}
+        onSwipeLeft={onSwipeLeft}
+        onSwipeRight={onSwipeRight}
+        renderItem={item => renderItem(item)}
+        renderEmpty={() => renderEmpty(selectedNum)}
+      />
+    </Container>
+  );
+};
 
 const styles = StyleSheet.create({
   headerStyle: {
-    width: screen.width * 0.85,
+    width: SCREEN_WIDTH * 0.85,
     alignSelf: "center",
     justifyContent: "center",
     elevation: 5,
@@ -147,11 +166,11 @@ const styles = StyleSheet.create({
   headerTextStyle: { fontSize: 14 },
   titleTextStyle: { fontSize: 24, textAlign: "center" },
   cardStyle: {
-    width: screen.width * 0.85,
+    width: SCREEN_WIDTH * 0.85,
     alignItems: "center"
   },
   imageStyle: {
-    height: screen.height * 0.28,
+    height: SCREEN_HEIGHT * 0.28,
     width: null,
     flex: 1
   },
@@ -159,8 +178,35 @@ const styles = StyleSheet.create({
   alignItemsCenter: {
     alignItems: "center"
   },
+  justifyContentCenter: {
+    justifyContent: "center"
+  },
   footerStyle: {
     marginTop: 5,
     paddingBottom: 20
+  },
+  finishButtonContainerStyle: {
+    height: SCREEN_HEIGHT * 0.72,
+    width: SCREEN_WIDTH * 0.85,
+    marginTop: 5,
+    elevation: 5,
+    alignSelf: "center"
+  },
+  finishButtonStyle: {
+    backgroundColor: "#99b6e5",
+    flexDirection: "row",
+    elevation: 5,
+    height: SCREEN_HEIGHT * 0.07,
+    width: SCREEN_WIDTH * 0.33,
+    justifyContent: "center",
+
+    alignSelf: "center"
+  },
+  finishButtonTextStyle: {
+    color: "white",
+    fontSize: 20,
+    textAlign: "center"
   }
 });
+
+export default Deck;

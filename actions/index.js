@@ -3,12 +3,15 @@ import {
   UPDATE_QUERY,
   FETCH_RESTAURANTS_START,
   FETCH_RESTAURANTS_FINISH,
+  CHANGE_SWIPE_INDEX,
   TOGGLE_SELECTED,
   UPDATED_CHOSEN_RESTAURANT,
   FETCH_REVIEWS_START,
-  FETCH_REVIEWS_FINISH
+  FETCH_REVIEWS_FINISH,
+  START_OVER
 } from "./types";
 import { ENDPOINT } from "../env";
+import { shuffleArray } from "../Utils";
 
 export const updateQuery = ({ prop, value }) => {
   return {
@@ -42,18 +45,23 @@ export const fetchRestaurants = navigation => async (dispatch, getState) => {
     }
   }
 
-  let results = await axios.post(ENDPOINT, {
+  const results = await axios.post(ENDPOINT, {
     term: query,
     location,
     radius: radius * 1600,
-    resultsLimit,
+    resultsLimit: 50, // Give back the max amount, and we'll filter from there
     openNow,
     price: finalPrices.toString()
   });
 
+  const restaurants = shuffleArray(results.data.businesses).slice(
+    0,
+    resultsLimit
+  );
+
   dispatch({
     type: FETCH_RESTAURANTS_FINISH,
-    payload: results.data.businesses
+    payload: restaurants
   });
 
   navigation.navigate("results");
@@ -77,4 +85,12 @@ export const toggleSelected = restaurant => {
 
 export const updateChosenRestaurant = restaurant => {
   return { type: UPDATED_CHOSEN_RESTAURANT, payload: restaurant };
+};
+
+export const changeIndex = position => {
+  return { type: CHANGE_SWIPE_INDEX, payload: position };
+};
+
+export const startOver = () => {
+  return { type: START_OVER };
 };

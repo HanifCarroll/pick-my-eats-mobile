@@ -1,15 +1,36 @@
 import React, { Component } from "react";
-import { ScrollView } from "react-native";
+import { ScrollView, BackHandler, Button } from "react-native";
 import { connect } from "react-redux";
 
+import * as actions from "../actions";
 import ChosenRestaurant from "../components/ChosenRestaurant";
 import Reviews from "../components/Reviews";
+import StartOverButton from "../components/StartOverButton";
 
 class ChosenRestaurantScreen extends Component {
-  static navigationOptions = {
+  static navigationOptions = ({ navigation }) => ({
     title: "And the winner is...",
-    headerStyle: { height: 40, bottom: -10, paddingBottom: 10 }
+    headerStyle: { height: 40, bottom: -10, paddingBottom: 10 },
+    headerLeft: null,
+    headerRight: (
+      <StartOverButton navigate={() => navigation.navigate("search")} />
+    )
+  });
+
+  handleReset = () => {
+    this.props.startOver();
+    this.props.navigation.navigate("search");
   };
+
+  componentDidMount() {
+    BackHandler.addEventListener("backPress", this.handleBackButton);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener("backPress", this.handleBackButton);
+  }
+
+  handleBackButton = () => true;
 
   render() {
     return (
@@ -25,4 +46,4 @@ class ChosenRestaurantScreen extends Component {
 
 const mapStateToProps = state => ({ restaurants: state.restaurants });
 
-export default connect(mapStateToProps, null)(ChosenRestaurantScreen);
+export default connect(mapStateToProps, actions)(ChosenRestaurantScreen);

@@ -1,10 +1,10 @@
-import { UPDATE_QUERY } from "../actions/types";
+import { UPDATE_QUERY, START_OVER } from "../actions/types";
 
 const INITIAL_STATE = {
-  location: "",
-  query: "",
+  location: "Tampa",
+  query: "Tacos",
   radius: 15,
-  resultsLimit: 20,
+  resultsLimit: 1,
   openNow: false,
   price1: true,
   price2: true,
@@ -15,9 +15,10 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case UPDATE_QUERY:
-      //return { ...state, [action.payload.prop]: [action.payload.value] };
       const { prop, value } = action.payload;
       return { ...state, [prop]: value };
+    case START_OVER:
+      return { ...state, location: "", query: "" };
     default:
       return state;
   }

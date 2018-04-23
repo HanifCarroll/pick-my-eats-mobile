@@ -2,12 +2,15 @@ import {
   FETCH_RESTAURANTS_START,
   FETCH_RESTAURANTS_FINISH,
   TOGGLE_SELECTED,
+  CHANGE_SWIPE_INDEX,
   UPDATED_CHOSEN_RESTAURANT,
   FETCH_REVIEWS_START,
-  FETCH_REVIEWS_FINISH
-} from '../actions/types';
+  FETCH_REVIEWS_FINISH,
+  START_OVER
+} from "../actions/types";
 
 const INITIAL_STATE = {
+  swipeIndex: 0,
   restaurantsResults: [],
   chosenRestaurant: {},
   selectedRestaurants: [],
@@ -19,7 +22,7 @@ export default (state = INITIAL_STATE, action) => {
   console.log(action.type);
   switch (action.type) {
     case FETCH_RESTAURANTS_START:
-      return { ...state, fetching: true };
+      return { ...state, fetching: true, swipeIndex: 0 };
     case FETCH_RESTAURANTS_FINISH:
       return { ...state, fetching: false, restaurantsResults: action.payload };
     case FETCH_REVIEWS_START:
@@ -52,6 +55,12 @@ export default (state = INITIAL_STATE, action) => {
         chosenRestaurant: action.payload,
         selectedRestaurants: []
       };
+    case CHANGE_SWIPE_INDEX:
+      return {
+        ...state,
+        swipeIndex: action.payload
+      };
+
     default:
       return state;
   }

@@ -4,9 +4,10 @@ import {
   TextInput,
   Keyboard,
   TouchableWithoutFeedback,
-  StyleSheet
+  StyleSheet,
+  BackHandler
 } from "react-native";
-import { Card, Button, Text, SearchBar } from "react-native-elements";
+import { Button, Text, SearchBar } from "react-native-elements";
 import { connect } from "react-redux";
 
 import * as actions from "../actions";
@@ -27,10 +28,13 @@ class SearchScreen extends Component {
     headerStyle: { height: 40, bottom: -10, paddingBottom: 10 }
   });
 
+  componentWillMount() {}
+
   onSubmit = () => {
     const { navigation } = this.props;
     Keyboard.dismiss();
     this.props.fetchRestaurants(navigation);
+    BackHandler.removeEventListener("backPress", () => true);
   };
 
   render() {
