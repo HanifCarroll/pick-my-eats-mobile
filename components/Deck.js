@@ -140,7 +140,8 @@ const Deck = props => {
     <Container>
       <CardItem style={headerStyle}>
         <Text style={headerTextStyle}>
-          {restaurants.length - currentIndex} Cards Remaining
+          {restaurants.length - currentIndex}{" "}
+          {headerText(restaurants.length, currentIndex)}
         </Text>
       </CardItem>
       <DeckSwiper
@@ -153,6 +154,10 @@ const Deck = props => {
       />
     </Container>
   );
+};
+
+const headerText = (length, index) => {
+  return length - index === 1 ? "Card Remaining" : "Cards Remaining";
 };
 
 const styles = StyleSheet.create({

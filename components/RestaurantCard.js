@@ -7,9 +7,10 @@ import {
   Linking,
   StyleSheet
 } from "react-native";
-import { Card, Rating } from "react-native-elements";
+import { Card } from "native-base";
+import StarRating from "react-native-star-rating";
 
-class RestaurantCard extends React.Component {
+class RestaurantCard extends Component {
   state = {
     selected: false
   };
@@ -60,11 +61,13 @@ class RestaurantCard extends React.Component {
           </View>
           <View style={infoContainerStyle}>
             <Text style={textStyle}>{name}</Text>
-            <Rating
-              imageSize={20}
-              readonly
-              startingValue={rating}
-              style={ratingStyle}
+            <StarRating
+              disabled
+              maxStars={5}
+              starSize={30}
+              rating={rating}
+              fullStarColor="orange"
+              emptyStarColor="orange"
             />
             <Text style={textStyle}>{review_count} Reviews</Text>
             <Text style={textStyle}>{price}</Text>

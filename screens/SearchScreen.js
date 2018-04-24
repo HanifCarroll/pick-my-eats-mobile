@@ -1,29 +1,56 @@
 import React, { Component } from "react";
 import {
   View,
+  Text,
   TextInput,
   Keyboard,
   TouchableWithoutFeedback,
+  TouchableOpacity,
+  ActivityIndicator,
   StyleSheet,
   BackHandler
 } from "react-native";
-import { Button, Text, SearchBar } from "react-native-elements";
+import { Button } from "native-base";
 import { connect } from "react-redux";
 
 import * as actions from "../actions";
+import { SCREEN_WIDTH, SCREEN_HEIGHT } from "../Utils";
+
+const SearchButton = props => {
+  const {
+    finishButtonStyle,
+    justifyContentCenter,
+    searchButtonTextStyle
+  } = styles;
+
+  const { fetching, onPress } = props;
+
+  return (
+    <TouchableOpacity style={finishButtonStyle} onPress={onPress}>
+      <View style={justifyContentCenter}>
+        {fetching && <ActivityIndicator color="white" />}
+      </View>
+      {!fetching && (
+        <View style={justifyContentCenter}>
+          <Text style={searchButtonTextStyle}>SEARCH!</Text>
+        </View>
+      )}
+    </TouchableOpacity>
+  );
+};
 
 class SearchScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: "Search",
     headerRight: (
       <Button
-        backgroundColor="rgba(0,0,0,0)"
-        color="rgba(0, 122, 255, 1)"
-        title="Settings"
+        transparent
         onPress={() => {
           navigation.navigate("settings");
         }}
-      />
+      >
+        <Text style={styles.settingsButtonStyle}>Settings</Text>
+      </Button>
     ),
     headerStyle: { height: 40, bottom: -10, paddingBottom: 10 }
   });
@@ -38,30 +65,21 @@ class SearchScreen extends Component {
   };
 
   render() {
-    const {
-      textStyle,
-      buttonStyle,
-      searchBarInputStyle,
-      searchBarContainerStyle1,
-      searchBarContainerStyle2
-    } = styles;
+    const { textStyle, searchBarStyle } = styles;
 
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View>
           <View>
-            <Text h2 style={textStyle}>
-              WHAT ARE YOU IN THE MOOD FOR?
-            </Text>
+            <Text style={textStyle}>WHAT ARE YOU LOOKING FOR?</Text>
           </View>
           <View>
-            <SearchBar
-              lightTheme
-              round
-              noIcon
-              containerStyle={searchBarContainerStyle1}
-              inputStyle={searchBarInputStyle}
+            <TextInput
+              clearButtonMode="always"
+              style={searchBarStyle}
               placeholder="Search for..."
+              placeholderTextColor="#86939e"
+              underlineColorAndroid="white"
               onChangeText={value =>
                 this.props.updateQuery({
                   prop: "query",
@@ -78,13 +96,11 @@ class SearchScreen extends Component {
             />
           </View>
           <View>
-            <SearchBar
-              lightTheme
-              round
-              noIcon
-              containerStyle={searchBarContainerStyle2}
-              inputStyle={searchBarInputStyle}
+            <TextInput
+              style={searchBarStyle}
               placeholder="Near..."
+              placeholderTextColor="#86939e"
+              underlineColorAndroid="white"
               onChangeText={value =>
                 this.props.updateQuery({
                   prop: "location",
@@ -100,13 +116,9 @@ class SearchScreen extends Component {
               value={this.props.query.location}
             />
           </View>
-          <Button
-            title="SEARCH!"
-            backgroundColor="#99b6e5"
-            buttonStyle={buttonStyle}
+          <SearchButton
             onPress={this.onSubmit}
-            loading={this.props.restaurants.fetching}
-            disabled={!this.props.query.query || !this.props.query.location}
+            fetching={this.props.restaurants.fetching}
           />
         </View>
       </TouchableWithoutFeedback>
@@ -120,21 +132,43 @@ const mapStateToProps = state => ({
 });
 
 const styles = StyleSheet.create({
+  settingsButtonStyle: {
+    color: "rgba(0, 122, 255, 1)",
+    fontSize: 16,
+    marginBottom: 10,
+    paddingRight: 15
+  },
   textStyle: {
+    fontSize: 44,
+    fontWeight: "bold",
     textAlign: "center"
   },
   buttonStyle: {
     marginTop: 20
   },
-  searchBarContainerStyle1: {
-    backgroundColor: "white"
+  finishButtonStyle: {
+    backgroundColor: "#99b6e5",
+    flexDirection: "row",
+    elevation: 5,
+    height: SCREEN_HEIGHT * 0.07,
+    width: SCREEN_WIDTH * 0.5,
+    marginTop: 25,
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "center"
   },
-  searchBarContainerStyle2: {
+  searchButtonTextStyle: {
+    color: "white",
+    fontSize: 20,
+    textAlign: "center"
+  },
+  searchBarStyle: {
     backgroundColor: "white",
-    marginTop: 20
-  },
-  searchBarInputStyle: {
-    backgroundColor: "white"
+    color: "#6b6b47",
+    height: 60,
+    marginTop: 10,
+    paddingLeft: 25,
+    paddingRight: 15
   }
 });
 

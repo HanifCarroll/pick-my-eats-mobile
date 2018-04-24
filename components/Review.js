@@ -1,53 +1,111 @@
-import React, { Component } from "react";
-import { Text, View, Image, Linking, StyleSheet } from "react-native";
-import { Card, Rating, Button } from "react-native-elements";
+import React from "react";
+import {
+  Text,
+  View,
+  Image,
+  Linking,
+  StyleSheet,
+  TouchableOpacity
+} from "react-native";
+import { Card, CardItem } from "native-base";
+import StarRating from "react-native-star-rating";
+
+import { SCREEN_WIDTH, SCREEN_HEIGHT } from "../Utils";
 
 const Review = ({ review }) => {
   const { text, rating, user, url } = review;
   const {
+    cardStyle,
+    firstCardItemStyle,
+    secondCardItemStyle,
     imageStyle,
     infoStyle,
     reviewTextViewStyle,
-    buttonContainerStyle,
-    ratingStyle
+    nameTextStyle,
+    footerStyle,
+    buttonStyle,
+    buttonTextStyle,
+    justifyContentCenter
   } = styles;
 
   return (
-    <Card>
-      <View>
+    <Card style={cardStyle}>
+      <CardItem style={firstCardItemStyle}>
         <View style={{ flexDirection: "row" }}>
           <Image style={imageStyle} source={{ uri: user.image_url }} />
           <View style={infoStyle}>
-            <Text>{user.name}</Text>
-            <Rating
-              style={ratingStyle}
-              readonly
-              imageSize={20}
-              startingValue={rating}
+            <Text style={nameTextStyle}>{user.name}</Text>
+            <StarRating
+              disabled
+              maxStars={5}
+              starSize={20}
+              rating={rating}
+              fullStarColor="orange"
+              emptyStarColor="orange"
             />
           </View>
         </View>
+      </CardItem>
+      <CardItem bordered style={secondCardItemStyle}>
         <View style={reviewTextViewStyle}>
           <Text>{text}</Text>
         </View>
-        <View style={buttonContainerStyle}>
-          <Button
-            backgroundColor="#99b6e5"
-            title="Read more!"
+      </CardItem>
+      <CardItem style={footerStyle}>
+        <View>
+          <TouchableOpacity
+            style={buttonStyle}
             onPress={() => Linking.openURL(url)}
-          />
+          >
+            <View style={justifyContentCenter}>
+              <Text style={buttonTextStyle}>Read More!</Text>
+            </View>
+          </TouchableOpacity>
         </View>
-      </View>
+      </CardItem>
     </Card>
   );
 };
 
 const styles = StyleSheet.create({
-  imageStyle: { width: 50, height: 50, borderRadius: 5 },
+  cardStyle: {
+    width: SCREEN_WIDTH * 0.95
+  },
+  firstCardItemStyle: {},
+  secondCardItemStyle: {
+    bottom: 5,
+    paddingTop: 0
+  },
+  imageStyle: { width: 55, height: 55, borderRadius: 5 },
   infoStyle: { marginLeft: 15 },
+  nameTextStyle: { fontSize: 16, marginBottom: 5 },
   reviewTextViewStyle: { marginTop: 10 },
-  buttonContainerStyle: { marginTop: 15, justifyContent: "center" },
-  ratingStyle: { marginTop: 5 }
+  justifyContentCenter: { justifyContent: "center" },
+  buttonContainerStyle: {
+    marginTop: 5,
+    marginBottom: -7,
+    justifyContent: "center",
+    alignItems: "center",
+    bottom: 10
+  },
+  buttonTextStyle: {
+    color: "white",
+    fontSize: 16,
+    textAlign: "center"
+  },
+  buttonStyle: {
+    backgroundColor: "#99b6e5",
+    flexDirection: "row",
+    elevation: 5,
+    height: SCREEN_HEIGHT * 0.05,
+    width: SCREEN_WIDTH * 0.66,
+    marginBottom: 10,
+    justifyContent: "center",
+    alignSelf: "center"
+  },
+  footerStyle: {
+    justifyContent: "center"
+  }
 });
 
 export default Review;

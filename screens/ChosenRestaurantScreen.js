@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { ScrollView, BackHandler, Button } from "react-native";
+import { ScrollView, BackHandler } from "react-native";
+import { Container } from "native-base";
 import { connect } from "react-redux";
 
 import * as actions from "../actions";
@@ -10,7 +11,12 @@ import StartOverButton from "../components/StartOverButton";
 class ChosenRestaurantScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: "And the winner is...",
-    headerStyle: { height: 40, bottom: -10, paddingBottom: 10 },
+    headerStyle: {
+      height: 40,
+      bottom: -10,
+      paddingBottom: 10,
+      paddingRight: 10
+    },
     headerLeft: null,
     headerRight: (
       <StartOverButton navigate={() => navigation.navigate("search")} />
@@ -34,12 +40,17 @@ class ChosenRestaurantScreen extends Component {
 
   render() {
     return (
-      <ScrollView style={{ flex: 1 }}>
-        <ChosenRestaurant
-          restaurant={this.props.restaurants.chosenRestaurant}
-        />
-        <Reviews data={this.props.restaurants.reviews} />
-      </ScrollView>
+      <Container>
+        <ScrollView
+          style={{ flex: 1 }}
+          contentContainerStyle={{ alignItems: "center" }}
+        >
+          <ChosenRestaurant
+            restaurant={this.props.restaurants.chosenRestaurant}
+          />
+          <Reviews data={this.props.restaurants.reviews} />
+        </ScrollView>
+      </Container>
     );
   }
 }
