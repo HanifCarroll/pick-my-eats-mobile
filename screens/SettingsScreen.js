@@ -22,6 +22,8 @@ class SettingsScreen extends Component {
       priceContainerStyle
     } = styles;
 
+    const { settings, updateSettings } = this.props;
+
     return (
       <Container>
         <Content contentContainerStyle={contentContainerStyle}>
@@ -30,12 +32,12 @@ class SettingsScreen extends Component {
               <View style={itemContainerStyle}>
                 <View style={itemStyle}>
                   <Text>Search Radius</Text>
-                  <Text>{`${this.props.query.radius} Miles`}</Text>
+                  <Text>{`${settings.radius} Miles`}</Text>
                 </View>
                 <Slider
-                  value={this.props.query.radius}
+                  value={settings.radius}
                   onValueChange={value =>
-                    this.props.updateQuery({ prop: "radius", value })
+                    updateSettings({ prop: "radius", value })
                   }
                   maximumValue={25}
                   minimumValue={1}
@@ -47,12 +49,12 @@ class SettingsScreen extends Component {
               <View style={itemContainerStyle}>
                 <View style={itemStyle}>
                   <Text>Max # of Results</Text>
-                  <Text>{this.props.query.resultsLimit}</Text>
+                  <Text>{settings.resultsLimit}</Text>
                 </View>
                 <Slider
-                  value={this.props.query.resultsLimit}
+                  value={settings.resultsLimit}
                   onValueChange={value =>
-                    this.props.updateQuery({ prop: "resultsLimit", value })
+                    updateSettings({ prop: "resultsLimit", value })
                   }
                   maximumValue={50}
                   minimumValue={1}
@@ -68,9 +70,9 @@ class SettingsScreen extends Component {
                   <View>
                     <CheckBox
                       label="$"
-                      checked={this.props.query.price1}
+                      checked={settings.price1}
                       onChange={value =>
-                        this.props.updateQuery({
+                        updateSettings({
                           // For some reason this only works if you do !value, otherwise it won't change
                           prop: "price1",
                           value: !value
@@ -79,9 +81,9 @@ class SettingsScreen extends Component {
                     />
                     <CheckBox
                       label="$$"
-                      checked={this.props.query.price2}
+                      checked={settings.price2}
                       onChange={value =>
-                        this.props.updateQuery({
+                        updateSettings({
                           prop: "price2",
                           value: !value
                         })
@@ -89,9 +91,9 @@ class SettingsScreen extends Component {
                     />
                     <CheckBox
                       label="$$$"
-                      checked={this.props.query.price3}
+                      checked={settings.price3}
                       onChange={value =>
-                        this.props.updateQuery({
+                        updateSettings({
                           prop: "price3",
                           value: !value
                         })
@@ -99,9 +101,9 @@ class SettingsScreen extends Component {
                     />
                     <CheckBox
                       label="$$$$"
-                      checked={this.props.query.price4}
+                      checked={settings.price4}
                       onChange={value =>
-                        this.props.updateQuery({
+                        updateSettings({
                           prop: "price4",
                           value: !value
                         })
@@ -117,9 +119,9 @@ class SettingsScreen extends Component {
                 <View style={itemStyle}>
                   <Text>Only Show Open Restaurants</Text>
                   <Switch
-                    value={this.props.query.openNow}
+                    value={settings.openNow}
                     onValueChange={value =>
-                      this.props.updateQuery({ prop: "openNow", value })
+                      updateSettings({ prop: "openNow", value })
                     }
                   />
                 </View>
@@ -163,7 +165,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-  query: state.query
+  settings: state.settings
 });
 
 export default connect(mapStateToProps, actions)(SettingsScreen);

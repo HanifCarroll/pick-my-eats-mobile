@@ -8,7 +8,7 @@ import * as actions from "../actions";
 class StartOverButton extends Component {
   onPress = () => {
     this.props.startOver();
-    this.props.navigate();
+    this.props.navigation.navigate("search");
   };
 
   render() {

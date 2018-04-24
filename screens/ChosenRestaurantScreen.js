@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import { ScrollView, BackHandler } from "react-native";
 import { Container } from "native-base";
 import { connect } from "react-redux";
+import { withNavigationFocus } from "react-navigation";
 
 import * as actions from "../actions";
 import ChosenRestaurant from "../components/ChosenRestaurant";
 import Reviews from "../components/Reviews";
 import StartOverButton from "../components/StartOverButton";
+import { resetAction } from "../Utils";
 
 class ChosenRestaurantScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -18,29 +20,29 @@ class ChosenRestaurantScreen extends Component {
       paddingRight: 10
     },
     headerLeft: null,
-    headerRight: (
-      <StartOverButton navigate={() => navigation.navigate("search")} />
-    )
+    headerRight: <StartOverButton navigation={navigation} />
   });
 
-  handleReset = () => {
-    this.props.startOver();
-    this.props.navigation.navigate("search");
+  listenForBackPress = () => {
+    if (this.props.isFocused) {
+      BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
+    } else {
+      BackHandler.removeEventListener(
+        "hardwareBackPress",
+        this.handleBackPress
+      );
+    }
   };
 
-  componentDidMount() {
-    BackHandler.addEventListener("backPress", this.handleBackButton);
-  }
-
-  componentWillUnmount() {
-    BackHandler.removeEventListener("backPress", this.handleBackButton);
-  }
-
-  handleBackButton = () => true;
+  handleBackPress = () => {
+    this.props.navigation.dispatch(resetAction);
+    return true;
+  };
 
   render() {
     return (
       <Container>
+        {this.listenForBackPress()}
         <ScrollView
           style={{ flex: 1 }}
           contentContainerStyle={{ alignItems: "center" }}
@@ -57,4 +59,6 @@ class ChosenRestaurantScreen extends Component {
 
 const mapStateToProps = state => ({ restaurants: state.restaurants });
 
-export default connect(mapStateToProps, actions)(ChosenRestaurantScreen);
+export default connect(mapStateToProps, actions)(
+  withNavigationFocus(ChosenRestaurantScreen)
+);

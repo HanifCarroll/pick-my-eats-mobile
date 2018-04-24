@@ -60,7 +60,13 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         swipeIndex: action.payload
       };
-
+    case START_OVER:
+      return {
+        ...state,
+        selectedRestaurants: [],
+        swipeIndex: 0,
+        reviews: []
+      };
     default:
       return state;
   }

@@ -1,4 +1,5 @@
 import { Dimensions } from "react-native";
+import { NavigationActions } from "react-navigation";
 
 export const SCREEN_WIDTH = Dimensions.get("window").width;
 export const SCREEN_HEIGHT = Dimensions.get("window").height;
@@ -10,3 +11,8 @@ export const shuffleArray = array => {
   }
   return array;
 };
+
+export const resetAction = NavigationActions.reset({
+  index: 0,
+  actions: [NavigationActions.navigate({ routeName: "search" })]
+});
