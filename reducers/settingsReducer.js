@@ -2,7 +2,7 @@ import { UPDATE_SETTINGS } from "../actions/types";
 
 const INITIAL_STATE = {
   radius: 15,
-  resultsLimit: 1,
+  resultsLimit: 20,
   openNow: false,
   price1: true,
   price2: true,

@@ -1,8 +1,8 @@
 import { UPDATE_QUERY, START_OVER } from "../actions/types";
 
 const INITIAL_STATE = {
-  location: "Tampa",
-  query: "Tacos"
+  location: "",
+  query: ""
 };
 
 export default (state = INITIAL_STATE, action) => {

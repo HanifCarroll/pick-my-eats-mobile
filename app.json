@@ -1,8 +1,15 @@
 {
   "expo": {
-    "name": "pick-my-eats",
+    "name": "Pick My Eats",
     "description": "No more fuss about deciding where to eat!",
     "slug": "pick-my-eats",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.hanifc.PickMyEats"
+    },
+    "android": {
+      "package": "com.hanifc.PickMyEats"
+    },
     "privacy": "public",
     "sdkVersion": "25.0.0",
     "platforms": ["ios", "android"],
@@ -15,9 +22,6 @@
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#fff290"
-    },
-    "ios": {
-      "supportsTablet": true
     },
     "androidStatusBar": {
       "barStyle": "dark-content",
