@@ -10,9 +10,9 @@ import {
 import { Button } from "native-base";
 import { connect } from "react-redux";
 
+import SearchBar from "../components/SearchBar";
 import SearchButton from "../components/SearchButton";
 import * as actions from "../actions";
-import { SCREEN_WIDTH, SCREEN_HEIGHT } from "../Utils";
 
 class SearchScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -36,8 +36,20 @@ class SearchScreen extends Component {
     this.props.fetchRestaurants(navigation);
   };
 
+  onChangeText = (prop, value) =>
+    this.props.updateQuery({
+      prop,
+      value
+    });
+
+  onClearText = prop =>
+    this.props.updateQuery({
+      prop,
+      value: ""
+    });
+
   render() {
-    const { textStyle, searchBarStyle } = styles;
+    const { textStyle } = styles;
 
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -45,49 +57,19 @@ class SearchScreen extends Component {
           <View>
             <Text style={textStyle}>WHAT ARE YOU LOOKING FOR?</Text>
           </View>
-          <View>
-            <TextInput
-              clearButtonMode="always"
-              style={searchBarStyle}
-              placeholder="Search for..."
-              placeholderTextColor="#86939e"
-              underlineColorAndroid="white"
-              onChangeText={value =>
-                this.props.updateQuery({
-                  prop: "query",
-                  value
-                })
-              }
-              onClearText={() =>
-                this.props.updateQuery({
-                  prop: "query",
-                  value: ""
-                })
-              }
-              value={this.props.query.query}
-            />
-          </View>
-          <View>
-            <TextInput
-              style={searchBarStyle}
-              placeholder="Near..."
-              placeholderTextColor="#86939e"
-              underlineColorAndroid="white"
-              onChangeText={value =>
-                this.props.updateQuery({
-                  prop: "location",
-                  value
-                })
-              }
-              onClearText={() =>
-                this.props.updateQuery({
-                  prop: "location",
-                  value: ""
-                })
-              }
-              value={this.props.query.location}
-            />
-          </View>
+          <SearchBar
+            placeholder="Search for..."
+            value={this.props.query.query}
+            onChangeText={value => this.onChangeText("query", value)}
+            onClearText={() => this.onClearText("query")}
+          />
+          <SearchBar
+            placeholder="Near..."
+            value={this.props.query.location}
+            onChangeText={value => this.onChangeText("location", value)}
+            onClearText={() => this.onClearText("location")}
+          />
+
           <SearchButton
             onPress={this.onSubmit}
             fetching={this.props.restaurants.fetching}
@@ -116,33 +98,6 @@ const styles = StyleSheet.create({
     fontSize: 44,
     fontWeight: "bold",
     textAlign: "center"
-  },
-  buttonStyle: {
-    marginTop: 20
-  },
-  finishButtonStyle: {
-    backgroundColor: "#99b6e5",
-    flexDirection: "row",
-    elevation: 5,
-    height: SCREEN_HEIGHT * 0.07,
-    width: SCREEN_WIDTH * 0.5,
-    marginTop: 25,
-    alignItems: "center",
-    justifyContent: "center",
-    alignSelf: "center"
-  },
-  searchButtonTextStyle: {
-    color: "white",
-    fontSize: 20,
-    textAlign: "center"
-  },
-  searchBarStyle: {
-    backgroundColor: "white",
-    color: "#6b6b47",
-    height: 60,
-    marginTop: 10,
-    paddingLeft: 25,
-    paddingRight: 15
   }
 });
 
