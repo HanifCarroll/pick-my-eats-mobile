@@ -6,6 +6,8 @@
     "privacy": "public",
     "sdkVersion": "25.0.0",
     "platforms": ["ios", "android"],
+    "githubUrl": "https://github.com/HanifCarroll/pick-my-eats-mobile",
+    "primaryColor": "#99b6e5",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

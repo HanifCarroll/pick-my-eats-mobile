@@ -7,8 +7,7 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
   ActivityIndicator,
-  StyleSheet,
-  BackHandler
+  StyleSheet
 } from "react-native";
 import { Button } from "native-base";
 import { connect } from "react-redux";
@@ -55,13 +54,10 @@ class SearchScreen extends Component {
     headerStyle: { height: 40, bottom: -10, paddingBottom: 10 }
   });
 
-  componentWillMount() {}
-
   onSubmit = () => {
     const { navigation } = this.props;
     Keyboard.dismiss();
     this.props.fetchRestaurants(navigation);
-    BackHandler.removeEventListener("backPress", () => true);
   };
 
   render() {
