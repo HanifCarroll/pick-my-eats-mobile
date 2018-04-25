@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import { Text } from "react-native";
 import { connect } from "react-redux";
 
 import * as actions from "../actions";
+import NoResults from "../components/NoResults";
 import Deck from "../components/Deck";
 
 class SearchResultsScreen extends Component {
@@ -31,8 +33,10 @@ class SearchResultsScreen extends Component {
     this.props.toggleSelected(restaurant);
   };
 
-  render() {
-    return (
+  renderResults = () => {
+    return this.props.restaurants.restaurantsResults.length === 0 ? (
+      <NoResults />
+    ) : (
       <Deck
         restaurants={this.props.restaurants.restaurantsResults}
         currentIndex={this.props.restaurants.swipeIndex}
@@ -43,6 +47,10 @@ class SearchResultsScreen extends Component {
         selectedNum={this.props.restaurants.selectedRestaurants.length}
       />
     );
+  };
+
+  render() {
+    return this.renderResults();
   }
 }
 

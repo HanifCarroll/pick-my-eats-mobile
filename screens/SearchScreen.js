@@ -5,38 +5,14 @@ import {
   TextInput,
   Keyboard,
   TouchableWithoutFeedback,
-  TouchableOpacity,
-  ActivityIndicator,
   StyleSheet
 } from "react-native";
 import { Button } from "native-base";
 import { connect } from "react-redux";
 
+import SearchButton from "../components/SearchButton";
 import * as actions from "../actions";
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from "../Utils";
-
-const SearchButton = props => {
-  const {
-    finishButtonStyle,
-    justifyContentCenter,
-    searchButtonTextStyle
-  } = styles;
-
-  const { fetching, onPress } = props;
-
-  return (
-    <TouchableOpacity style={finishButtonStyle} onPress={onPress}>
-      <View style={justifyContentCenter}>
-        {fetching && <ActivityIndicator color="white" />}
-      </View>
-      {!fetching && (
-        <View style={justifyContentCenter}>
-          <Text style={searchButtonTextStyle}>SEARCH!</Text>
-        </View>
-      )}
-    </TouchableOpacity>
-  );
-};
 
 class SearchScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -115,6 +91,8 @@ class SearchScreen extends Component {
           <SearchButton
             onPress={this.onSubmit}
             fetching={this.props.restaurants.fetching}
+            query={this.props.query.query}
+            location={this.props.query.location}
           />
         </View>
       </TouchableWithoutFeedback>
