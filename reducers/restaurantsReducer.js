@@ -22,7 +22,12 @@ export default (state = INITIAL_STATE, action) => {
   console.log(action.type);
   switch (action.type) {
     case FETCH_RESTAURANTS_START:
-      return { ...state, fetching: true, swipeIndex: 0 };
+      return {
+        ...state,
+        fetching: true,
+        swipeIndex: 0,
+        selectedRestaurants: []
+      };
     case FETCH_RESTAURANTS_FINISH:
       return { ...state, fetching: false, restaurantsResults: action.payload };
     case FETCH_REVIEWS_START:

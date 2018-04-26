@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Text } from "react-native";
 import { connect } from "react-redux";
 
 import * as actions from "../actions";
@@ -10,6 +9,12 @@ class SearchResultsScreen extends Component {
   static navigationOptions = {
     title: "Results",
     headerStyle: { height: 40, bottom: -10, paddingBottom: 10 }
+  };
+
+  restart = () => {
+    this.props.updateQuery({ prop: "query", value: "" });
+    this.props.updateQuery({ prop: "location", value: "" });
+    this.props.navigation.navigate("search");
   };
 
   onSubmit = () => {
@@ -43,6 +48,7 @@ class SearchResultsScreen extends Component {
         onSwipeLeft={this.onSwipeLeft}
         onSwipeRight={this.onSwipeRight}
         onFinish={this.onSubmit}
+        restart={this.restart}
         fetching={this.props.restaurants.fetching}
         selectedNum={this.props.restaurants.selectedRestaurants.length}
       />

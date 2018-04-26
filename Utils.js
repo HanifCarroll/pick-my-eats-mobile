@@ -16,3 +16,7 @@ export const resetAction = NavigationActions.reset({
   index: 0,
   actions: [NavigationActions.navigate({ routeName: "search" })]
 });
+
+export const headerText = (length, index) => {
+  return length - index === 1 ? "Card Remaining" : "Cards Remaining";
+};
