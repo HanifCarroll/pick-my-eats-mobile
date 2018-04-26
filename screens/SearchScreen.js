@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 
 import SearchBar from "../components/SearchBar";
 import SearchButton from "../components/SearchButton";
+import SearchButtons from "../components/SearchButtons";
 import * as actions from "../actions";
 
 class SearchScreen extends Component {
@@ -69,12 +70,13 @@ class SearchScreen extends Component {
             onChangeText={value => this.onChangeText("location", value)}
             onClearText={() => this.onClearText("location")}
           />
-
-          <SearchButton
-            onPress={this.onSubmit}
+          {console.log(this.props.query)}
+          <SearchButtons
+            onSubmit={this.onSubmit}
             fetching={this.props.restaurants.fetching}
             query={this.props.query.query}
             location={this.props.query.location}
+            updateQuery={this.props.updateQuery}
           />
         </View>
       </TouchableWithoutFeedback>

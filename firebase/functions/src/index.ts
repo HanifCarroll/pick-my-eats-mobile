@@ -8,11 +8,22 @@ const apiKey = functions.config().yelp.key;
 const client = yelp.client(apiKey);
 const app = express();
 
-const searchTerm = async (term, location, radius, limit, open_now, price) => {
+const searchTerm = async (
+  term,
+  location,
+  latitude,
+  longitude,
+  radius,
+  limit,
+  open_now,
+  price
+) => {
   const result = await client
     .search({
       term,
       location,
+      latitude,
+      longitude,
       radius,
       limit,
       open_now,
@@ -39,10 +50,21 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.post("/", async (req, res, next) => {
-  const { term, location, radius, resultsLimit, openNow, price } = req.body;
+  const {
+    term,
+    location,
+    latitude,
+    longitude,
+    radius,
+    resultsLimit,
+    openNow,
+    price
+  } = req.body;
   const results = await searchTerm(
     term,
     location,
+    latitude,
+    longitude,
     radius,
     resultsLimit,
     openNow,

@@ -53,8 +53,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     elevation: 5,
     height: SCREEN_HEIGHT * 0.07,
-    width: SCREEN_WIDTH * 0.5,
-    marginTop: 25,
+    width: SCREEN_WIDTH * 0.8,
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "center"

@@ -52,7 +52,6 @@ const FinishButton = props => {
 
   return (
     <CardItem style={finishButtonContainerStyle}>
-      {console.log(fetching)}
       <Body style={justifyContentCenter}>{createView()}</Body>
     </CardItem>
   );

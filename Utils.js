@@ -20,3 +20,15 @@ export const resetAction = NavigationActions.reset({
 export const headerText = (length, index) => {
   return length - index === 1 ? "Card Remaining" : "Cards Remaining";
 };
+
+// Turn prices from [true, true, false, true] to [1, 2, 4] for yelp API
+export const makeFinalPrices = pricesArray => {
+  let finalPrices = [];
+
+  for (let i = 0; i < pricesArray.length; i++) {
+    if (pricesArray[i]) {
+      finalPrices.push(i + 1);
+    }
+  }
+  return finalPrices;
+};

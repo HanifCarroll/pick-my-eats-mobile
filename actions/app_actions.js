@@ -4,7 +4,8 @@ import {
   CHANGE_SWIPE_INDEX,
   TOGGLE_SELECTED,
   UPDATED_CHOSEN_RESTAURANT,
-  START_OVER
+  START_OVER,
+  TURN_OFF_LOCATION
 } from "./types";
 
 export const updateQuery = ({ prop, value }) => {
@@ -35,4 +36,8 @@ export const changeIndex = position => {
 
 export const startOver = () => {
   return { type: START_OVER };
+};
+
+export const turnOffLocation = () => {
+  return { type: TURN_OFF_LOCATION };
 };

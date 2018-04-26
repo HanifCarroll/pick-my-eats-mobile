@@ -14,11 +14,13 @@ const cors = require("cors");
 const apiKey = functions.config().yelp.key;
 const client = yelp.client(apiKey);
 const app = express();
-const searchTerm = (term, location, radius, limit, open_now, price) => __awaiter(this, void 0, void 0, function* () {
+const searchTerm = (term, location, latitude, longitude, radius, limit, open_now, price) => __awaiter(this, void 0, void 0, function* () {
     const result = yield client
         .search({
         term,
         location,
+        latitude,
+        longitude,
         radius,
         limit,
         open_now,
@@ -42,8 +44,8 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.post("/", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
-    const { term, location, radius, resultsLimit, openNow, price } = req.body;
-    const results = yield searchTerm(term, location, radius, resultsLimit, openNow, price);
+    const { term, location, latitude, longitude, radius, resultsLimit, openNow, price } = req.body;
+    const results = yield searchTerm(term, location, latitude, longitude, radius, resultsLimit, openNow, price);
     res.send(results);
 }));
 app.get("/reviews/:id", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
