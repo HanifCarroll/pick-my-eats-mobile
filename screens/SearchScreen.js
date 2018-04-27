@@ -2,16 +2,14 @@ import React, { Component } from "react";
 import {
   View,
   Text,
-  TextInput,
   Keyboard,
   TouchableWithoutFeedback,
   StyleSheet
 } from "react-native";
-import { Button } from "native-base";
+import { Container, Content, Button } from "native-base";
 import { connect } from "react-redux";
 
 import SearchBar from "../components/SearchBar";
-import SearchButton from "../components/SearchButton";
 import SearchButtons from "../components/SearchButtons";
 import * as actions from "../actions";
 
@@ -53,33 +51,41 @@ class SearchScreen extends Component {
     const { textStyle } = styles;
 
     return (
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View>
-          <View>
-            <Text style={textStyle}>WHAT ARE YOU LOOKING FOR?</Text>
-          </View>
-          <SearchBar
-            placeholder="Search for..."
-            value={this.props.query.query}
-            onChangeText={value => this.onChangeText("query", value)}
-            onClearText={() => this.onClearText("query")}
-          />
-          <SearchBar
-            placeholder="Near..."
-            value={this.props.query.location}
-            onChangeText={value => this.onChangeText("location", value)}
-            onClearText={() => this.onClearText("location")}
-          />
-          {console.log(this.props.query)}
-          <SearchButtons
-            onSubmit={this.onSubmit}
-            fetching={this.props.restaurants.fetching}
-            query={this.props.query.query}
-            location={this.props.query.location}
-            updateQuery={this.props.updateQuery}
-          />
-        </View>
-      </TouchableWithoutFeedback>
+      <Container>
+        <Content>
+          <TouchableWithoutFeedback
+            onPress={Keyboard.dismiss}
+            accessible={false}
+          >
+            <View>
+              <View>
+                <Text style={textStyle}>WHAT ARE YOU LOOKING FOR?</Text>
+              </View>
+
+              <SearchBar
+                placeholder="Search for..."
+                value={this.props.query.query}
+                onChangeText={value => this.onChangeText("query", value)}
+                onClearText={() => this.onClearText("query")}
+              />
+              <SearchBar
+                placeholder="Near..."
+                value={this.props.query.location}
+                onChangeText={value => this.onChangeText("location", value)}
+                onClearText={() => this.onClearText("location")}
+              />
+
+              <SearchButtons
+                onSubmit={this.onSubmit}
+                fetching={this.props.restaurants.fetching}
+                query={this.props.query.query}
+                location={this.props.query.location}
+                updateQuery={this.props.updateQuery}
+              />
+            </View>
+          </TouchableWithoutFeedback>
+        </Content>
+      </Container>
     );
   }
 }

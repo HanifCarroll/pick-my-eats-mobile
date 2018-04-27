@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
+import { Container, Content } from "native-base";
 import * as actions from "../actions";
 import NoResults from "../components/NoResults";
 import Deck from "../components/Deck";
@@ -56,7 +56,11 @@ class SearchResultsScreen extends Component {
   };
 
   render() {
-    return this.renderResults();
+    return (
+      <Container>
+        <Content>{this.renderResults()}</Content>
+      </Container>
+    );
   }
 }
 

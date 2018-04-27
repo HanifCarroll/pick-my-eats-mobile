@@ -17,8 +17,8 @@ class GeolocateButton extends Component {
 
   handlePress = async () => {
     if (!this.state.pressed) {
-      await this.getLocation();
-      return this.setState({ pressed: true });
+      const success = await this.getLocation();
+      if (success) return this.setState({ pressed: true });
     }
 
     this.props.turnOffLocation();
@@ -28,9 +28,13 @@ class GeolocateButton extends Component {
   getLocation = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
 
-    if (status) {
-      await this.props.fetchLocation();
+    if (status !== "granted") {
+      return false;
     }
+
+    await this.props.fetchLocation();
+
+    return true;
   };
 
   renderIcon = () => {
@@ -48,7 +52,7 @@ class GeolocateButton extends Component {
   };
 
   render() {
-    const { buttonStyle, iconStyle, enabledIconStyle } = styles;
+    const { buttonStyle } = styles;
 
     return (
       <TouchableOpacity style={buttonStyle} onPress={this.handlePress}>
