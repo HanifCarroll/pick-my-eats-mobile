@@ -10,6 +10,7 @@ import { Container, Content, Button } from "native-base";
 import { connect } from "react-redux";
 
 import SearchBar from "../components/SearchBar";
+import LocationSearchBar from "../components/LocationSearchBar";
 import SearchButtons from "../components/SearchButtons";
 import * as actions from "../actions";
 
@@ -68,11 +69,12 @@ class SearchScreen extends Component {
                 onChangeText={value => this.onChangeText("query", value)}
                 onClearText={() => this.onClearText("query")}
               />
-              <SearchBar
+              <LocationSearchBar
                 placeholder="Near..."
                 value={this.props.query.location}
                 onChangeText={value => this.onChangeText("location", value)}
                 onClearText={() => this.onClearText("location")}
+                gps={this.props.query.gpsEnabled}
               />
 
               <SearchButtons
