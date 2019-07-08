@@ -7,3 +7,5 @@ If you'd like to help out on the project, let me know!
 
 Available on the Google Play store. 
 https://play.google.com/store/apps/details?id=com.hanifc.PickMyEats
+
+EDIT: The application is, unfortunately, no longer available on the Google Play Store.
